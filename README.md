@@ -1,52 +1,17 @@
 # demo-broken-block-slots
 
-This README outlines the details of collaborating on this Ember application.
-A short introduction of this app could easily go here.
+Repo to demonstrate an incompatibility between `ember-block-slots@1.1.6` and `ember@2.10.0`, when
 
-## Prerequisites
+- the `block-params` helper is used
+- one of those params is a object provided through the `hash` helper
+- the browser does not have a native `WeakMap` implementation
 
-You will need the following things properly installed on your computer.
+## Seeing the error
 
-* [Git](https://git-scm.com/)
-* [Node.js](https://nodejs.org/) (with NPM)
-* [Bower](https://bower.io/)
-* [Ember CLI](https://ember-cli.com/)
-* [PhantomJS](http://phantomjs.org/)
+Run the tests in Phantomjs, or some other browser that does not support WeakMap.
 
-## Installation
+If you just do `ember test` then you'll see an unrelated error.  However, if you do `ember test --serve` and look at the errors in the Phantomjs tab, you'll see that error plus the following (which is actually the error):
 
-* `git clone <repository-url>` this repository
-* `cd demo-broken-block-slots`
-* `npm install`
-* `bower install`
+> TypeError: Attempting to define property on object that is not extensible.
 
-## Running / Development
-
-* `ember serve`
-* Visit your app at [http://localhost:4200](http://localhost:4200).
-
-### Code Generators
-
-Make use of the many generators for code, try `ember help generate` for more details
-
-### Running Tests
-
-* `ember test`
-* `ember test --server`
-
-### Building
-
-* `ember build` (development)
-* `ember build --environment production` (production)
-
-### Deploying
-
-Specify what it takes to deploy your app.
-
-## Further Reading / Useful Links
-
-* [ember.js](http://emberjs.com/)
-* [ember-cli](https://ember-cli.com/)
-* Development Browser Extensions
-  * [ember inspector for chrome](https://chrome.google.com/webstore/detail/ember-inspector/bmdblncegkenkacieihfhpjfppoconhi)
-  * [ember inspector for firefox](https://addons.mozilla.org/en-US/firefox/addon/ember-inspector/)
+This comes from changes made in Ember `2.10.0`, where the format of attributes passed into a component have changed slightly.
