@@ -6,6 +6,8 @@ Repo to demonstrate an incompatibility between `ember-block-slots@1.1.6` and `em
 - one of those params is a object provided through the `hash` helper
 - the browser does not have a native `WeakMap` implementation
 
+The issue is being track here: [ember-block-slots#43](https://github.com/ciena-blueplanet/ember-block-slots/issues/43)
+
 ## Seeing the error
 
 Run the tests in Phantomjs, or some other browser that does not support WeakMap.
